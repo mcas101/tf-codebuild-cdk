@@ -3,6 +3,7 @@ from aws_cdk import (
     Stack,
     aws_sqs as sqs,
     aws_codebuild as cb,
+    aws_secretsmanager as sm
 )
 from constructs import Construct
 
@@ -30,6 +31,18 @@ class TfCodebuildCdkStack(Stack):
                     cb.EventAction.PULL_REQUEST_UPDATED
                 ).and_base_branch_is(branch),
             )
+
+        gh_secret = sm.Secret.from_secret_attributes(
+            self,
+            "ImportedSecret",
+            secret_complete_arn = "arn:aws:secretsmanager:us-east-1:800493571185:secret:gh-token-HKxmQt",
+        ).secret_value
+
+        cb.GitHubSourceCredentials(
+            self,
+            "credentials",
+            access_token    = gh_secret
+        )
 
         source = cb.Source.git_hub(
             owner                   = "mcas101",
