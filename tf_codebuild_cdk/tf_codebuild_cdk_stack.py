@@ -54,7 +54,7 @@ class TfCodebuildCdkStack(Stack):
             "phases": {
                 "build": {
                     "commands": [
-                            "./misc/cdk_diff.sh",
+                        "cdk diff --all",
                     ]
                 }
             }
