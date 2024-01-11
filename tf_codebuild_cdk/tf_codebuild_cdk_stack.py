@@ -54,7 +54,8 @@ class TfCodebuildCdkStack(Stack):
             "phases": {
                 "build": {
                     "commands": [
-                        "echo this works!"
+                            "python -m pip install -r requirements.txt",
+                            "npx cdk ls",
                     ]
                 }
             }
