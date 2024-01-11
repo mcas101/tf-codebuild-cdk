@@ -55,6 +55,7 @@ class TfCodebuildCdkStack(Stack):
                 "build": {
                     "commands": [
                             "./misc/cdk_diff.sh",
+                            "echo doneskiiii"
                     ]
                 }
             }
