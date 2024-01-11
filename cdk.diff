@@ -10,7 +10,7 @@ Resources
   "phases": {
     "build": {
       "commands": [
-        "echo this works!"
+        "./misc/cdk_diff.sh"
       ]
     }
   }
@@ -20,7 +20,8 @@ Resources
   "phases": {
     "build": {
       "commands": [
-        "./misc/cdk_diff.sh"
+        "./misc/cdk_diff.sh",
+        "echo doneskiiii"
       ]
     }
   }
