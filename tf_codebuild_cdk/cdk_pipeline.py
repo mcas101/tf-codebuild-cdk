@@ -54,7 +54,7 @@ class CdkPipeline(Stack):
             stage_name='Source',
             actions=[
                     cp_actions.CodeStarConnectionsSourceAction(
-                        connection_arn="arn:aws:codestar-connections:us-east-1:800493571185:connection/9d781b7a-835e-4880-b59d-b04f4034b216k",
+                        connection_arn="arn:aws:codestar-connections:us-east-1:800493571185:connection/9d781b7a-835e-4880-b59d-b04f4034b216",
                         repo="tf-codebuild-cdk",
                         branch="main",
                         owner="mcas101",
