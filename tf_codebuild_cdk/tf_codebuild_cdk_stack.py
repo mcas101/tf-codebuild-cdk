@@ -65,19 +65,6 @@ class TfCodebuildCdkStack(Stack):
             compute_type = cb.ComputeType.MEDIUM,
         )
 
-        # build_spec = cb.BuildSpec.from_object({
-        #         "version": "0.1",
-        #         "phases":{
-        #             "build":{
-        #                 "commands":[
-        #                     "python -m pip install -r requirements.txt",
-        #                     "npx cdk diff -all"
-        #                 ]
-        #             }
-        #         }
-        #     }
-        # )
-
         build_spec = cb.BuildSpec.from_source_filename(
             filename=('buildspecs/cb_buildspec.yaml')
         )
@@ -89,5 +76,13 @@ class TfCodebuildCdkStack(Stack):
             source                  = source,
             environment             = build_env,
             build_spec              = build_spec,
-            role                    =codebuild_role
+            role                    = codebuild_role
         )
+
+        self.output_props = {}
+        self.output_props['cb_cdk_diff'] = project
+
+    # Pass object to other stacks
+    @property
+    def outputs(self):
+        return self.output_props

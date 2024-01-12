@@ -8,7 +8,7 @@ from tf_codebuild_cdk.cdk_pipeline import CdkPipeline
 
 
 app = cdk.App()
-TfCodebuildCdkStack(app, "TfCodebuildCdkStack")
-CdkPipeline(app, "CdkCodepipeline")
+cdk_diff_build = TfCodebuildCdkStack(app, "TfCodebuildCdkStack")
+cdk_pipeline = CdkPipeline(app, "CdkCodepipeline")
 
 app.synth()

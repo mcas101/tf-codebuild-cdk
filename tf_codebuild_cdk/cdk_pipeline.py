@@ -5,7 +5,7 @@ from aws_cdk import (
     aws_codepipeline as cp,
     aws_codepipeline_actions as cp_actions,
     aws_s3 as s3,
-    aws_iam  as iam
+    aws_iam  as iam,
 )
 from constructs import Construct
 
@@ -32,17 +32,11 @@ class CdkPipeline(Stack):
             self,
             "Build",
             project_name="cdk-build-project",
-            build_spec=cb.BuildSpec.from_object({
-                "version": "0.2",
-                "phases": {
-                    "build": {
-                        "commands": [
-                            "python -m pip install -r requirements.txt",
-                            "npx cdk ls",
-                        ]
-                    }
-                }
-            }),
+
+            build_spec = cb.BuildSpec.from_source_filename(
+                filename=('buildspecs/cb_buildspec.yaml')
+            ),
+
             environment=cb.BuildEnvironment(
                 build_image=cb.LinuxBuildImage.STANDARD_5_0,
                 privileged=True,
