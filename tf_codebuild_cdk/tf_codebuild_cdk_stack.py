@@ -1,7 +1,8 @@
 from aws_cdk import (
     Stack,
     aws_codebuild as cb,
-    aws_secretsmanager as sm
+    aws_secretsmanager as sm,
+    aws_iam as iam
 )
 from constructs import Construct
 
@@ -9,6 +10,21 @@ class TfCodebuildCdkStack(Stack):
 
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
+
+        codebuild_role = iam.Role(
+            self,
+            "CodebuildRole",
+            assumed_by=iam.ServicePrincipal("codebuild.amazonaws.com"),
+        )
+
+        codebuild_role.add_to_policy(
+            iam.PolicyStatement(
+                resources=["*"],
+                actions=[
+                    "cloudformation:*"
+                ]
+            )
+        )
 
         triggers = ["pr"]
         filters = []
@@ -49,16 +65,21 @@ class TfCodebuildCdkStack(Stack):
             compute_type = cb.ComputeType.MEDIUM,
         )
 
-        build_spec = cb.BuildSpec.from_object({
-            "version": "0.1",
-            "phases": {
-                "build": {
-                    "commands": [
-                        "cdk diff --all",
-                    ]
-                }
-            }
-            }
+        # build_spec = cb.BuildSpec.from_object({
+        #         "version": "0.1",
+        #         "phases":{
+        #             "build":{
+        #                 "commands":[
+        #                     "python -m pip install -r requirements.txt",
+        #                     "npx cdk diff -all"
+        #                 ]
+        #             }
+        #         }
+        #     }
+        # )
+
+        build_spec = cb.BuildSpec.from_source_filename(
+            filename=('buildspecs/cb_buildspec.yaml')
         )
 
         project = cb.Project(
@@ -67,5 +88,6 @@ class TfCodebuildCdkStack(Stack):
             project_name            = "timmy",
             source                  = source,
             environment             = build_env,
-            build_spec              = build_spec
+            build_spec              = build_spec,
+            role                    =codebuild_role
         )

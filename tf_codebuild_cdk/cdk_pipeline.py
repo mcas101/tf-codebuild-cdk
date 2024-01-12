@@ -5,6 +5,7 @@ from aws_cdk import (
     aws_codepipeline as cp,
     aws_codepipeline_actions as cp_actions,
     aws_s3 as s3,
+    aws_iam  as iam
 )
 from constructs import Construct
 
