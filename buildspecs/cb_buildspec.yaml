@@ -8,6 +8,6 @@ phases:
     - pip install -r requirements.txt
     - npm install aws-cdk@1.134.0 --loglevel verbose
     - npm install --loglevel verbose
-    build:
-      commands:
-      - npm run cdk diff '*'
+  build:
+    commands:
+    - npm run cdk diff '*'
