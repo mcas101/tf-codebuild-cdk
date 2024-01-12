@@ -28,6 +28,21 @@ class CdkPipeline(Stack):
         cdk_build_outputs = cp.Artifact(artifact_name="cdk_build")
         source_output = cp.Artifact(artifact_name='source')
 
+        code_pipeline_role = iam.Role(
+            self,
+            "CodebuildRole",
+            assumed_by=iam.ServicePrincipal("codebuild.amazonaws.com"),
+        )
+
+        code_pipeline_role.add_to_policy(
+            iam.PolicyStatement(
+                resources=["*"],
+                actions=[
+                    "cloudformation:*"
+                ]
+            )
+        )
+
         cdk_build_project = cb.PipelineProject(
             self,
             "Build",
@@ -77,7 +92,8 @@ class CdkPipeline(Stack):
         pipeline = cp.Pipeline(
             self,
             "CdkPipeline",
-            pipeline_name="Timmy-Pipe",
-            artifact_bucket=bucket,
-            stages=pipeline_stages
+            pipeline_name   = "Timmy-Pipe",
+            artifact_bucket = bucket,
+            stages          = pipeline_stages,
+            role            = code_pipeline_role
         )
