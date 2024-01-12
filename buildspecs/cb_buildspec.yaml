@@ -4,9 +4,9 @@ phases:
   install:
     commands:
     - npm install n
-    - n 16.3.0
+    - n 18.0.0
     - pip install -r requirements.txt
-    - npm install aws-cdk@1.134.0 --loglevel verbose
+    - npm install aws-cdk@2.24.1 --loglevel verbose
     - npm install --loglevel verbose
   build:
     commands:
