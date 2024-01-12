@@ -10,4 +10,4 @@ phases:
     - npm install --loglevel verbose
   build:
     commands:
-    - npm run cdk diff '*'
+    - npx cdk diff '*'
