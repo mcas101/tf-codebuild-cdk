@@ -38,18 +38,18 @@ class TfCodebuildCdkStack(Stack):
                 ).and_base_branch_is(branch),
             )
 
-        gh_secret = sm.Secret.from_secret_attributes(
-            self,
-            "ImportedSecret",
-            secret_complete_arn = "arn:aws:secretsmanager:us-east-1:800493571185:secret:gh-token-HKxmQt",
-        ).secret_value #THIS .secret_value is needed 100%
+        # gh_secret = sm.Secret.from_secret_attributes(
+        #     self,
+        #     "ImportedSecret",
+        #     secret_complete_arn = "arn:aws:secretsmanager:us-east-1:800493571185:secret:gh-token-HKxmQt",
+        # ).secret_value #THIS .secret_value is needed 100%
 
 
-        cb.GitHubSourceCredentials(
-            self,
-            "credentials",
-            access_token    = gh_secret
-        )
+        # cb.GitHubSourceCredentials(
+        #     self,
+        #     "credentials",
+        #     access_token    = gh_secret
+        # )
 
         source = cb.Source.git_hub(
             owner                   = "mcas101",
